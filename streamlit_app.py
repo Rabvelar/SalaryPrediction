@@ -5,7 +5,7 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Customize Matplotlib style
+# Customize Matplotlib style for a dark theme
 plt.style.use('dark_background')
 plt.rcParams['text.color'] = 'white'
 plt.rcParams['axes.labelcolor'] = 'white'
@@ -97,26 +97,32 @@ def show_explore_page(job_title=None):
         st.write(f"### {job_title}")
         job_df = df[df["job_title"] == job_title]
 
+        # Histogram for Salary Distribution
         fig, ax = plt.subplots(facecolor=(0, 0, 0, 0))
+        ax.set_facecolor((0.1, 0.1, 0.1))  # Dark grey background
         ax.hist(job_df["salary"], bins=20, edgecolor='white', alpha=0.7)
-        ax.set_xlabel("Salary")
-        ax.set_ylabel("Frequency")
-        ax.set_title("Distribution of Salaries")
+        ax.set_xlabel("Salary", color='white')
+        ax.set_ylabel("Frequency", color='white')
+        ax.set_title("Distribution of Salaries", color='white')
         st.pyplot(fig)
 
+        # Pie Chart for Work Settings Distribution
         fig, ax = plt.subplots(facecolor=(0, 0, 0, 0))
+        ax.set_facecolor((0.1, 0.1, 0.1))  # Dark grey background
         ax.pie(job_df['work_setting'].value_counts(), labels=job_df['work_setting'].value_counts().index, autopct='%1.1f%%', startangle=90)
         ax.axis('equal')
-        ax.set_title("Distribution of Work Settings")
+        ax.set_title("Distribution of Work Settings", color='white')
         st.pyplot(fig)
 
+        # Countplot for Company Locations
         fig, ax = plt.subplots(facecolor=(0, 0, 0, 0))
+        ax.set_facecolor((0.1, 0.1, 0.1))  # Dark grey background
         sns.countplot(y="company_location", data=job_df[job_df['company_location'] != 'Other'],
                       order=job_df[job_df['company_location'] != 'Other']['company_location'].value_counts().index,
                       ax=ax, alpha=0.7)
-        ax.set_xlabel("Count")
-        ax.set_ylabel("Company Location")
-        ax.set_title("Count of Company Locations")
+        ax.set_xlabel("Count", color='white')
+        ax.set_ylabel("Company Location", color='white')
+        ax.set_title("Count of Company Locations", color='white')
         st.pyplot(fig)
     else:
         job_titles_counts = df[df['job_title'] != 'Other']['job_title'].value_counts()
